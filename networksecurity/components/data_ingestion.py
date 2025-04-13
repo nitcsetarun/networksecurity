@@ -11,7 +11,7 @@ import pandas as pd
 import pymongo
 
 from networksecurity.entity.config_entity import DataIngestionConfig
-from networksecurity.entity.data_artifacts import DataArtifacts
+from networksecurity.entity.data_artifacts import DataIngestionArtifacts
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -83,7 +83,7 @@ class DataIngestion:
             dataframe=self.export_from_mongo()
             dataframe=self.store_to_featurepath(dataframe)
             self.split_test_train(dataframe)
-            data_artifacts=DataArtifacts(training_file_path=self.data_ingestion_config.training_dir,testing_file_path=self.data_ingestion_config.testing_dir)
+            data_artifacts=DataIngestionArtifacts(training_file_path=self.data_ingestion_config.training_dir,testing_file_path=self.data_ingestion_config.testing_dir)
 
             return data_artifacts
         except Exception as e:

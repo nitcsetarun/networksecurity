@@ -55,7 +55,7 @@ class DataValidation:
                     isFound=True
                     status=False
                 report.update({column:{
-                    'p_value':is_same_dist.pvalue,
+                    'p_value':float(is_same_dist.pvalue),
                     'is_found':isFound
                 }})
             
@@ -87,7 +87,7 @@ class DataValidation:
 
             status=self.check_drift(base_df=train_data,current_df=test_data)
             
-            train_valid_path=self.data_validation_config.data_valid_test
+            train_valid_path=self.data_validation_config.data_valid_train
             trdir=os.path.dirname(train_valid_path)
             os.makedirs(trdir,exist_ok=True)
 

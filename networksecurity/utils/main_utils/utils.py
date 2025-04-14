@@ -5,6 +5,7 @@ import os
 import sys
 import dill
 import pickle
+import numpy as np
 
 
 def read_yaml_file(filepath:str) -> dict:
@@ -24,4 +25,23 @@ def write_yaml_file(folder_path:str,filepath:str,content:object,replace:bool=Fal
         with open(filepath,'w')as file:
             yaml.dump(content,file)        
     except Exception as e:
-        raise NetworkSecurityException(e,sys)    
+        raise NetworkSecurityException(e,sys)
+
+
+def save_to_np(filepath:str,array:np.array)-> None:
+    try:
+        dirname=os.path.dirname(filepath)
+        os.makedirs(dirname,exist_ok=True)
+        with open (filepath,'wb') as file:
+            np.save(file,array)
+    except Exception as e:
+        raise NetworkSecurityException(e,sys) from e
+
+def save_object(filepath:str,obj:object)-> None:
+    try:
+        dirname=os.path.dirname(filepath)
+        os.makedirs(dirname,exist_ok=True)
+        with open (filepath,'wb') as file:
+            pickle.dump(obj,file)
+    except Exception as e:
+        raise NetworkSecurityException(e,sys) from e    

@@ -84,6 +84,10 @@ jobs:
       - name: Pull latest images
         run: |
          docker pull ${{secrets.ECR_REPO}}/${{ secrets.ECR_REPO_BUCKET }}:latest
+
+      - name: Debug image name
+        run: echo "${{ secrets.ECR_REPO }}/${{ secrets.ECR_REPO_BUCKET }}:latest"
+          
          
       #- name: Stop and remove  container if running
        # run: |

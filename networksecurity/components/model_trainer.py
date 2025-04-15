@@ -18,6 +18,7 @@ from networksecurity.utils.main_utils.ml_utils.model.estimator import NetworkMod
 from networksecurity.utils.main_utils.utils import load_numpy_array,save_object,load_object,evaluateModel
 
 
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import r2_score
 from sklearn.neighbors import KNeighborsClassifier
@@ -155,8 +156,9 @@ class ModelTrainer:
 
 
         except Exception as e:
-            raise NetworkSecurityException(e,sys)    
-        
+            raise NetworkSecurityException(e,sys)
+
+   
 
 
     def inititate_model_training(self)->ModelTrainerArtifacts:

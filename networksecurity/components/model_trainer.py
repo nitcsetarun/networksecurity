@@ -32,12 +32,9 @@ import mlflow
 
 from urllib.parse import urlparse
 
-# import dagshub
-# #dagshub.init(repo_owner='krishnaik06', repo_name='networksecurity', mlflow=True)
+import dagshub
+dagshub.init(repo_owner='nitcsetarun', repo_name='networksecurity', mlflow=True)
 
-# os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/krishnaik06/networksecurity.mlflow"
-# os.environ["MLFLOW_TRACKING_USERNAME"]="krishnaik06"
-# os.environ["MLFLOW_TRACKING_PASSWORD"]="7104284f1bb44ece21e0e2adb4e36a250ae3251f"
 
 
 
@@ -52,8 +49,7 @@ class ModelTrainer:
     
     def track_mlflow(self,best_model,classificationmetric):
         try:
-            # mlflow.set_registry_uri("https://dagshub.com/krishnaik06/networksecurity.mlflow")
-            # tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+           
             with mlflow.start_run():
                 f1_score=classificationmetric.f1_score
                 precision_score=classificationmetric.precision
@@ -65,16 +61,16 @@ class ModelTrainer:
                 mlflow.log_metric("precision",precision_score)
                 mlflow.log_metric("recall_score",recall_score)
                 mlflow.sklearn.log_model(best_model,"model")
-            # Model registry does not work with file store
-                # if tracking_url_type_store != "file":
+            # #Model registry does not work with file store
+            #     if tracking_url_type_store != "file":
 
-                #     # Register the model
-                #     # There are other ways to use the Model Registry, which depends on the use case,
-                #     # please refer to the doc for more information:
-                #     # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                #     mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
-                # else:
-                #     mlflow.sklearn.log_model(best_model, "model")
+            #         # Register the model
+            #         # There are other ways to use the Model Registry, which depends on the use case,
+            #         # please refer to the doc for more information:
+            #         # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+            #         mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
+            #     else:
+            #         mlflow.sklearn.log_model(best_model, "model")
 
         except Exception as e:
             raise NetworkSecurityException(e,sys)
@@ -146,6 +142,8 @@ class ModelTrainer:
             dir_name=os.path.dirname(self.model_trainer_config.model_file_path)
             os.makedirs(dir_name,exist_ok=True)
             save_object(self.model_trainer_config.model_file_path,obj=Network_model)
+
+            save_object('final_model/model.pkl',best_model)
 
             Model_trainer_artifact=ModelTrainerArtifacts(
                     model_path=self.model_trainer_config.model_file_path,
